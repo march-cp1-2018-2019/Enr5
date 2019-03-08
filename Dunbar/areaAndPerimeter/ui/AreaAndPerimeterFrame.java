@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 // Noah 2/28/2019
 
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -22,19 +23,18 @@ import areaAndPerimeter.business.Rectangle;
 
 @SuppressWarnings("serial")
 public class AreaAndPerimeterFrame extends JFrame{
-  // TODO: Add instance variables for text fields
   private JTextField lengthTextField;
   private JTextField widthTextField;
   private JTextField areaTextField;
   private JTextField perimeterTextField;
 
+  private JLabel messageLabel;
   private JButton computeButton;
   private JButton resetButton;
 
   public AreaAndPerimeterFrame(){
     try{
-      UIManager.setLookAndFeel(
-          UIManager.getSystemLookAndFeelClassName());
+      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
     }catch(ClassNotFoundException | InstantiationException |
            IllegalAccessException | UnsupportedLookAndFeelException e){
       System.out.println(e);
@@ -48,7 +48,6 @@ public class AreaAndPerimeterFrame extends JFrame{
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setLocationByPlatform(true);
     
-    // components go here
     lengthTextField = new JTextField();
     widthTextField = new JTextField();
     areaTextField = new JTextField();
@@ -86,6 +85,8 @@ public class AreaAndPerimeterFrame extends JFrame{
     panel.add(new JLabel("Perimeter:"), getConstraints(0, 3));
     panel.add(perimeterTextField, getConstraints(1, 3));
 
+    messageLabel = new JLabel("");
+
     computeButton = new JButton("Compute");
     resetButton = new JButton("Reset");
     
@@ -98,6 +99,7 @@ public class AreaAndPerimeterFrame extends JFrame{
     buttonLayout.setAlignment(FlowLayout.RIGHT);
     buttonPanel.setLayout(buttonLayout);
 
+    buttonPanel.add(messageLabel);
     buttonPanel.add(computeButton);
     buttonPanel.add(resetButton);
 
@@ -109,7 +111,7 @@ public class AreaAndPerimeterFrame extends JFrame{
   }
 
   // Helper method to return GridBagConstraints objects
-  private GridBagConstraints getConstraints(int x, int y) {
+  private GridBagConstraints getConstraints(int x, int y){
     GridBagConstraints c = new GridBagConstraints();
     c.anchor = GridBagConstraints.LINE_START;
     c.insets = new Insets(5, 5, 0, 5);
@@ -127,13 +129,15 @@ public class AreaAndPerimeterFrame extends JFrame{
       width = Double.parseDouble(widthTextField.getText());
     }catch(NumberFormatException ex){
       resetButtonClicked();
+      messageLabel.setText("Invalid Length or Width");
+
       return;
     }
 
     Rectangle rect = new Rectangle(length, width);
 
-    areaTextField.setText("" + rect.getArea());
-    perimeterTextField.setText("" + rect.getPerimeter());
+    areaTextField.setText("" + rect.getAreaNumberFormat());
+    perimeterTextField.setText("" + rect.getPerimeterNumberFormat());
   }
 
   private void resetButtonClicked(){
@@ -141,12 +145,11 @@ public class AreaAndPerimeterFrame extends JFrame{
     widthTextField.setText("");
     areaTextField.setText("");
     perimeterTextField.setText("");
+
+    messageLabel.setText("");
   }
   
   public static void main(String[] args){
-    java.awt.EventQueue.invokeLater(() -> {
-      @SuppressWarnings("unused")
-			JFrame frame = new AreaAndPerimeterFrame();
-    });
+    EventQueue.invokeLater(() -> new AreaAndPerimeterFrame());
   }
 }
