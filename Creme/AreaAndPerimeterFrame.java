@@ -1,5 +1,9 @@
 /**
  * Made By Jeremiah Creme
+ *
+ * TEACHER NOTES:  Excellent implementation!  I ran it and it works! I even put in some bad values.  Good job
+ * I put a few comments below all prefaces with "TEACHER NOTES"  Just a couple small things.
+ * 
  */
 import java.awt.Container;
 import java.awt.Dimension;
@@ -21,6 +25,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 @SuppressWarnings("serial")
 public class AreaAndPerimeterFrame extends JFrame {
+	// TEACHER NOTES: name your variables starting with a lowercase letter unless its a constant.
+	// ex. tf1Label, tf1, tf2Label, tf2, tf3, b1, etc......
 	JLabel TF1Label = new JLabel("Type Width Here:");
 	JTextField TF1 = new JTextField("");
 	JLabel TF2Label = new JLabel("Type Hight Here:");
@@ -46,6 +52,7 @@ public class AreaAndPerimeterFrame extends JFrame {
 		setTitle("Area and Perimeter Calculator");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		TF1.setPreferredSize(new Dimension(40, 20));
+		// TEACHER NOTES: i don't think you need all these setVisible() for each field, just the one for this JFrame at the end of this method.
 		TF1.setVisible(true);
 		TF2.setPreferredSize(new Dimension(40, 20));
 		TF2.setVisible(true);
@@ -104,6 +111,14 @@ public class AreaAndPerimeterFrame extends JFrame {
 				TF3.setText("Perimeter : " + (TF1Int + TF1Int + TF2Int + TF2Int));
 				TF4.setText("Area : " + (TF1Int * TF2Int));
 				pack();
+			/* i would add an extra catch here specifically for NumberFormatExceptions since your error message
+			*  specifically describes a number error.  Catching Exception here could mean many different
+			*  errors, not just the user typing in an invalid number.
+			*/
+			// catch (NumberFormatException nfe){
+				//set your text fields
+				//pack
+			//}
 			} catch (Exception e) {
 
 				TF3.setText("You Have To Type In");
@@ -114,6 +129,7 @@ public class AreaAndPerimeterFrame extends JFrame {
 		}
 	}
 
+	// TEACHER NOTES: good!
 	class resetButtonClicked implements ActionListener {
 		public void actionPerformed(ActionEvent a) {
 			TF1.setText("");
